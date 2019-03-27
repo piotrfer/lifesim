@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "generation.h"
+#include "reader.h"
 
 int main(int argc, char** argv){
 	
@@ -68,7 +69,8 @@ int main(int argc, char** argv){
 		printf("%d ",save[i]);
 	}
 	printf("\n\n");
-
+	
+	int a = readFile( filename, gen0 );
 	/*
 
 	gen_t* obiekt = malloc( sizeof(gen_t) );
