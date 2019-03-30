@@ -7,7 +7,7 @@
 
 int main(int argc, char** argv){
 	
-	gen_t* gen0 = malloc( sizeof(gen_t) );
+	gen_t gen0;
 	int n = 10;
 	char* filename = NULL;
 	char* output = NULL;
@@ -70,29 +70,17 @@ int main(int argc, char** argv){
 	}
 	printf("\n\n");
 	
-	int a = readFile( filename, gen0 );
-	/*
+	int a = readFile( filename, &gen0 );
+	if( a != 0 )
+		return EXIT_FAILURE;
 
-	gen_t* obiekt = malloc( sizeof(gen_t) );
-	obiekt->num = 0;
-	int * tab = malloc( 10 * sizeof(int) );
-	obiekt->matrix = malloc(10*sizeof(tab) );
-	for(int i = 0; i < 10; i++){
-		for(int j = 0; j < 10; j++){
-			tab[j] = i * j;
-		}
-		obiekt->matrix[i]=tab;
-	}
-
-	for(int i = 0; i < 10; i++){
-		for(int j = 0; j < 10; j++){
-			printf("%d ", obiekt->matrix[i][j]);
+	for(int i = 0; i < gen0.row; i++){
+		for(int j = 0; j < gen0.col; j++){
+			printf("%d ", gen0.matrix[i][j]);
 		}
 		printf("\n");
-	} */
+	} 
 	
-	//free(obiekt);
-	free(gen0);
 	free(save);
 	return 0;
 }
