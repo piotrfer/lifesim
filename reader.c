@@ -54,17 +54,52 @@ int readFile(char* filename, gen_t* gen0){
 		while( fscanf(in,"%d %d", &x, &y) != EOF ){
 			line++;
 			if( x > row || x < 1 || y > col || y < 1){ //w pliku komórki macierzy są ponumerowane od 1!!!
-				printf("Linia %d: Bledne wspolrzedne komorki; komorka poza siatka\n", line);
+				fprintf(stderr, "Linia %d: Bledne wspolrzedne komorki; komorka poza siatka\n", line);
 				return 1;
 			}
 			gen0->matrix[x-1][y-1]++; 
 		}
 	}
 	else if(type == MESH){
+		char c;
+		int col = 0, row = 1;
+		while( (c = getc(in)) != EOF && (c != '\n') )
+			col++;
+		rewind(in);
 
-	;
+		gen0->matrix = malloc( sizeof(int *) );
+		gen0->matrix[0] = calloc( col * sizeof(int), sizeof(int) );
+	
+		int i = 0;
+		while( (c = getc(in) ) != EOF ){
+			if(c == '\n'){
+				row++;
+				gen0->matrix = realloc(gen0->matrix, row * sizeof(int *));
+				if( gen0->matrix == NULL ){
+					fprintf(stderr, "Cos poszlo nie tak\n");
+					return 1;
+				}
+				gen0->matrix[row-1] = calloc( col * sizeof(int), sizeof(int) );
+				i = 0;
+			}
+			else if( (c == '0' || c == '1') && i < col ){
+				gen0->matrix[row-1][i++] = c - '0';
+			}
+			else if(i >= col){
+				fprintf(stderr, "Linia %d: Zbyt wiele liczb w rzedzie\n", row);
+				return 1;
+			}
+			else{
+				fprintf(stderr, "Linia %d: Bledna wartosc komorki: %d\n", row, c);
+				return 1;
+			}
+		}
 
+		gen0->col = col;
+		gen0->row = --row;
 	}
+
+	fclose(in);
 	
 	return 0;
 }

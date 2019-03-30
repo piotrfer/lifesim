@@ -68,18 +68,19 @@ int main(int argc, char** argv){
 	for(int i = 0; i < n + 1; i++){
 		printf("%d ",save[i]);
 	}
-	printf("\n\n");
+	printf("\n");
 	
 	int a = readFile( filename, &gen0 );
 	if( a != 0 )
 		return EXIT_FAILURE;
-
+	printf("Wczytana generacja\n");
 	for(int i = 0; i < gen0.row; i++){
 		for(int j = 0; j < gen0.col; j++){
 			printf("%d ", gen0.matrix[i][j]);
 		}
 		printf("\n");
 	} 
+	printf("\n");
 	
 	free(save);
 	return 0;
