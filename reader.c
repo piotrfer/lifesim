@@ -94,9 +94,10 @@ int readFile(char* filename, gen_t* gen0){
 				return 1;
 			}
 		}
-
+		
+		gen0->matrix = realloc( gen0->matrix, (--row) * sizeof( int *) );
 		gen0->col = col;
-		gen0->row = --row;
+		gen0->row = row;
 	}
 
 	fclose(in);
