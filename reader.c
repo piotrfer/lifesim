@@ -90,7 +90,7 @@ int readFile(char* filename, gen_t* gen0){
 				return 1;
 			}
 			else{
-				fprintf(stderr, "Linia %d: Bledna wartosc komorki: %d\n", row, c);
+				fprintf(stderr, "Linia %d: Bledna wartosc komorki: %c\n", row, c);
 				return 1;
 			}
 		}
