@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include "generation.h"
 #include "reader.h"
+#include "simulate.h"
 
 int main(int argc, char** argv){
 	
@@ -82,6 +83,8 @@ int main(int argc, char** argv){
 	} 
 	printf("\n");
 	
+	simulate( &gen0, n, output, save);
+
 	free(save);
 	return 0;
 }
