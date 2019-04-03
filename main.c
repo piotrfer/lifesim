@@ -6,12 +6,28 @@
 #include "reader.h"
 #include "simulate.h"
 
+void help(){
+printf("** lifesim **\n");
+printf("program symulujacy gre w zycie Johna Conwaya\n");
+printf("mozliwe argumenty wywolania:\n");
+printf("--input [filename] -- nazwa pliku zawierajacego dane wejsciowe\n");
+printf("--gen [number] -- liczba generacji do zasymulowania\n");
+printf("--output [filename] -- prefiks pliku .png stanowiacego plik wyjsciowy programu\n");
+printf("--save [number] -- numery generacji do zapisania w postaci pliku .txt\n");
+printf("=========================================\n");
+}
+
 int main(int argc, char** argv){
 	
 	gen_t gen0;
 	int n = 10;
 	char* filename = NULL;
 	char* output = NULL;
+
+	if( argc == 1 ){
+		help();
+		return EXIT_SUCCESS;
+	}
 
 	for(int i = 1; i < argc; i++){
 		if( !strcmp(argv[i], "--input") && argc > i+1 ){

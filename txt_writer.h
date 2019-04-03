@@ -1,0 +1,1 @@
+void writeTxt( gen_t* );

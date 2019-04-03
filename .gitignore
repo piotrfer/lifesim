@@ -1,0 +1,6 @@
+makefile
+main.o
+reader.o
+simulate.o
+next_gen.o
+txt_writer.o

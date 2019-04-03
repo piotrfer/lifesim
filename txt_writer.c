@@ -14,7 +14,7 @@ void writeTxt( gen_t* thisGen){
 	sprintf(file, "save/gen%d", thisGen->num);
 	struct stat st = {0};
 	if( stat("save", &st) == -1 )
-		mkdir("save", 0700);
+		mkdir("save");
 
 	FILE *out = fopen( file, "w" );
 	if( out == NULL)
