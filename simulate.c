@@ -14,14 +14,5 @@ void simulate(gen_t* gen0, int n, char* output, int* save){
 			writeTxt(thisGen);
 		}
 		nextGen(thisGen);
-	
-	for(int i = 0; i < thisGen->row; i++){
-		for(int j = 0; j < thisGen->col; j++){
-			printf("%d ", thisGen->matrix[i][j]);
-		}
-		printf("\n");
 	}
-	printf("\n");
-	}
-	
 }

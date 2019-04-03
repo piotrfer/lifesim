@@ -29,7 +29,7 @@ int main(int argc, char** argv){
 	for(int i = 1; i < argc; i++)
 	{
 		if( !strcmp(argv[i],"--gen") && argc >= i ){
-			n = atoi(argv[i+1]);
+			n = atoi(argv[i+1]) + 1;
 			if( n < 0 ){
 				fprintf(stderr, "Argument: --gen %d: nieprawidlowa ilosc generacji \n", n);
 				return EXIT_FAILURE;
