@@ -4,7 +4,33 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <png.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "generation.h"
+#define DEAD 0
+#define ALIVE 1
+#define BORDER 50
+#define FIELD 100
+#define MARK_DEAD 255
+#define MARK_ALIVE 0
+#define MARK_DEFAULT 255
+
+void process_file();
+void write_png_file( char * );
+
+void writePng( gen_t* thisGen, char* output ){
+	
+	char* file = malloc( 32 * sizeof(char) );
+	sprintf(file, "save/gen%d.png", thisGen->num);
+	struct stat st = {0};
+	if( stat("save", &st) == -1 )
+		mkdir("save", 0700);
+
+	process_file(thisGen);
+	write_png_file(file);	
+
+	free(file);
+}
 
 int x, y;
 
@@ -62,9 +88,9 @@ void write_png_file(char* file_name) {
   fclose(fp);
 }
 
-void process_file(void) {
-  width = 200;
-  height = 200;
+void process_file(gen_t* thisGen) {
+  width = thisGen->col * FIELD + 2*BORDER;
+  height = thisGen->row * FIELD + 2*BORDER;
   bit_depth = 8;
   color_type = PNG_COLOR_TYPE_GRAY;
 
@@ -76,17 +102,16 @@ void process_file(void) {
   for (y=0; y<height; y++) {
     png_byte* row = row_pointers[y];
     for (x=0; x<width; x++) {
-      row[x] = (y+x)%2? 255 : 0;
-      printf("Pixel at position [ %d - %d ] has RGBA values: %d\n",
-       x, y, row[x]);
-    }
-  }
-}
-
-
-int main(int argc, char **argv) {
-  process_file();
-  write_png_file("out.png");
-
-  return 0;
+      if( x > BORDER && x < width-BORDER && y > BORDER && y < height-BORDER){
+      	for(int i = 0; i < FIELD; i++){
+	      row[x+i] = thisGen->matrix[(x-BORDER)/FIELD][(y-BORDER)/FIELD] == ALIVE ? MARK_ALIVE : MARK_DEAD;
+      	}
+	x += FIELD;
+	}
+      else{
+	row[x] = MARK_DEFAULT;
+      }
+      //printf("Pixel at position [ %d - %d ] has RGBA values: %d\n", x, y, row[x]);
+      }
+   }
 }

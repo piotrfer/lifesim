@@ -11,10 +11,10 @@
 void writeTxt( gen_t* thisGen){
 	
 	char* file = malloc( 32 * sizeof(char) );	
-	sprintf(file, "save/gen%d", thisGen->num);
+	sprintf(file, "save/gen%d.txt", thisGen->num);
 	struct stat st = {0};
 	if( stat("save", &st) == -1 )
-		mkdir("save");
+		mkdir("save", 0700);
 
 	FILE *out = fopen( file, "w" );
 	if( out == NULL)
@@ -28,4 +28,5 @@ void writeTxt( gen_t* thisGen){
 	}
 	}
 	fclose(out);
+	free( file);
 }
