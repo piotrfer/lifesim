@@ -13,7 +13,7 @@ printf("mozliwe argumenty wywolania:\n");
 printf("--input [filename] -- nazwa pliku zawierajacego dane wejsciowe\n");
 printf("--gen [number] -- liczba generacji do zasymulowania\n");
 printf("--output [filename] -- prefiks pliku .png stanowiacego plik wyjsciowy programu\n");
-printf("--save [number] -- numery generacji do zapisania w postaci pliku .txt\n");
+printf("--save [number] -- numery generacji do zapisania w postaci pliku .txt; \"all\" -- wszystkie generacje\n");
 printf("=========================================\n");
 }
 
