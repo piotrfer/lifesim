@@ -62,7 +62,7 @@ int arguments(int argc, char** argv, int* n, char** filename, char** output, int
 			else {	
 				while( argc > i + 1 && isdigit(argv[i+1][0]) != 0 ){
 					if(atoi(argv[i+1]) <= *n)
-						*save[atoi(argv[i+1])] = 1;
+						save[0][atoi(argv[i+1])] = 1;
 					i++;		
 				}
 			}

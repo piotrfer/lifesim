@@ -49,7 +49,7 @@ int readFile(char* filename, gen_t* gen0){
 
 		for(int i = 0; i < row; i++)
 		{
-			gen0->matrix[i] = malloc(col * sizeof(int) );
+			gen0->matrix[i] = calloc(col * sizeof(int), sizeof(int) );
 		}
 		while( fscanf(in,"%d %d", &x, &y) != EOF ){
 			line++;
