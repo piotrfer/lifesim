@@ -1,1 +1,1 @@
-void nextGen( gen_t* );
+int nextGen( gen_t* );

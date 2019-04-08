@@ -12,7 +12,7 @@ int readFile(char* filename, gen_t* gen0){
 		printf("Brak pliku wejsciowego: plik %s nie istnieje\n", filename);	
 		return 1;
 	}
-	
+
 	int type = MESH;
 	gen0->num = 0;
 
@@ -31,7 +31,7 @@ int readFile(char* filename, gen_t* gen0){
 		}
 	}
 	rewind(in);
-	
+
 	if(type == COLUMN){
 		int col, row, x, y;
 		int line = 0;
@@ -46,7 +46,7 @@ int readFile(char* filename, gen_t* gen0){
 		gen0->row = row;
 
 		gen0->matrix = malloc( row * sizeof(int *) );
-		
+
 		for(int i = 0; i < row; i++)
 		{
 			gen0->matrix[i] = malloc(col * sizeof(int) );
@@ -69,7 +69,7 @@ int readFile(char* filename, gen_t* gen0){
 
 		gen0->matrix = malloc( sizeof(int *) );
 		gen0->matrix[0] = calloc( col * sizeof(int), sizeof(int) );
-	
+
 		int i = 0;
 		while( (c = getc(in) ) != EOF ){
 			if(c == '\n'){
@@ -94,13 +94,13 @@ int readFile(char* filename, gen_t* gen0){
 				return 1;
 			}
 		}
-		
+
 		gen0->matrix = realloc( gen0->matrix, (--row) * sizeof( int *) );
 		gen0->col = col;
 		gen0->row = row;
 	}
 
 	fclose(in);
-	
+
 	return 0;
 }

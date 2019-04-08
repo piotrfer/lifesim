@@ -5,7 +5,7 @@
 #define ALIVE 1
 
 void copyGen( gen_t* origin, gen_t* thisGen){
-	
+
 	origin->num = thisGen->num;
 	origin->col = thisGen->col;
 	origin->row = thisGen->row;
@@ -21,7 +21,7 @@ void copyGen( gen_t* origin, gen_t* thisGen){
 }
 
 int neighbours( gen_t* origin, int i, int j){
-	
+
 	int result = 0;
 	if( i - 1 >= 0 && origin->matrix[i-1][j] == ALIVE) //od góry
 		result++;
@@ -43,11 +43,11 @@ int neighbours( gen_t* origin, int i, int j){
 	return result;
 }
 
-void nextGen( gen_t* thisGen ){
-	
+int nextGen( gen_t* thisGen ){
+
 	gen_t* origin = malloc( sizeof( gen_t) );
 	copyGen( origin, thisGen );
-	
+
 	for(int i = 0; i < origin-> row; i++){
 		for(int j = 0; j < origin->col; j++){
 			int tmp = neighbours( origin, i, j);
@@ -60,4 +60,6 @@ void nextGen( gen_t* thisGen ){
 
 	thisGen->num++;
 	free(origin);
+
+	return 0;
 }

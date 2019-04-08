@@ -1,1 +1,1 @@
-void writePng( gen_t*, char*);
+int writePng( gen_t*, char*);
