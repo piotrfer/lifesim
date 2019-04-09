@@ -4,23 +4,7 @@
 #define DEAD 0
 #define ALIVE 1
 
-void copyGen( gen_t* origin, gen_t* thisGen){
-
-	origin->num = thisGen->num;
-	origin->col = thisGen->col;
-	origin->row = thisGen->row;
-	origin->matrix = malloc( origin->row * sizeof(int*) );
-	for(int i = 0; i < origin->row; i++){
-		origin->matrix[i] = calloc( origin->col * sizeof(int), sizeof(int) );
-	}
-	for(int i = 0; i < origin->row; i++){
-		for(int j = 0; j < origin->col; j++){
-			origin->matrix[i][j] = thisGen->matrix[i][j];
-		}
-	}
-}
-
-int neighbours( gen_t* origin, int i, int j){
+int aliveNeighboursCounter( gen_t* origin, int i, int j){
 
 	int result = 0;
 	if( i - 1 >= 0 && origin->matrix[i-1][j] == ALIVE) //od góry
@@ -45,15 +29,14 @@ int neighbours( gen_t* origin, int i, int j){
 
 int nextGen( gen_t* thisGen ){
 
-	gen_t* origin = malloc( sizeof( gen_t) );
-	copyGen( origin, thisGen );
+	gen_t* origin = setGen( thisGen );
 
 	for(int i = 0; i < origin-> row; i++){
 		for(int j = 0; j < origin->col; j++){
-			int tmp = neighbours( origin, i, j);
-			if( origin->matrix[i][j] == DEAD && tmp == 3 )
+			int alive_neighbours = aliveNeighboursCounter( origin, i, j);
+			if( origin->matrix[i][j] == DEAD && alive_neighbours == 3 )
 				thisGen->matrix[i][j] = ALIVE;
-			else if( origin->matrix[i][j] == ALIVE && tmp != 3 && tmp != 2 )
+			else if( origin->matrix[i][j] == ALIVE && alive_neighbours != 3 && alive_neighbours != 2 )
 				thisGen->matrix[i][j] = DEAD;
 		}
 	}

@@ -77,7 +77,7 @@ int readArguments(int argc, char** argv, gconfig_t* config){
 
 int main(int argc, char** argv){
 
-	gen_t* gen0 = setGen(); 
+	gen_t* gen0 = setGen( NULL ); 
 	gconfig_t* config = setConfig();
  
 	

@@ -5,12 +5,14 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "generation.h"
+
 #define DEAD 0
 #define ALIVE 1
+#define BUFSIZE 32
 
 int writeTxt( gen_t* thisGen){
 
-	char* file = malloc( 32 * sizeof(char) );	
+	char* file = malloc( BUFSIZE * sizeof(char) );	
 	sprintf(file, "save/gen%d.txt", thisGen->num);
 	struct stat st = {0};
 	if( stat("save", &st) == -1 )
