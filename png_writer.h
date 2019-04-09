@@ -1,1 +1,1 @@
-int writePng( gen_t*, pngconfig_t*);
+int writePng( gen_t*, pictureconfig_t*);

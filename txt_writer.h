@@ -1,1 +1,1 @@
-int writeTxt( gen_t* );
+int writeTxt( gen_t*, char* );
