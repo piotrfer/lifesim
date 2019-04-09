@@ -18,7 +18,7 @@ int writeTxt( gen_t* thisGen){
 
 	FILE *out = fopen( file, "w" );
 	if( out == NULL){
-		printf("Blad pliku .txt: nie mozna utworzyc pliku\n");
+		fprintf(stderr, "Blad pliku .txt: nie mozna utworzyc pliku\n");
 		return 1;
 	}
 	else{

@@ -9,7 +9,7 @@
 int readFile( gen_t* gen0, char* filename){
 	FILE *in = fopen(filename, "r");
 	if( in == NULL ){
-		printf("Brak pliku wejsciowego: plik %s nie istnieje\n", filename);	
+		fprintf(stderr, "Brak pliku wejsciowego: plik %s nie istnieje\n", filename);	
 		return 1;
 	}
 
@@ -39,7 +39,7 @@ int readFile( gen_t* gen0, char* filename){
 		fscanf(in, "%d", &col);
 		line++;
 		if( row < 5  || col < 5){
-			printf("Linia 1: Bledne wymiary siatki; podaj liczbe z przedzialu [5,100]\n");
+			fprintf(stderr, "Linia 1: Bledne wymiary siatki; podaj liczbe z przedzialu [5,100]\n");
 			return 1;
 		}
 		gen0->col = col;
@@ -76,7 +76,7 @@ int readFile( gen_t* gen0, char* filename){
 				row++;
 				gen0->matrix = realloc(gen0->matrix, row * sizeof(int *));
 				if( gen0->matrix == NULL ){
-					fprintf(stderr, "Cos poszlo nie tak\n");
+					fprintf(stderr, "Blad realokowania pamieci\n");
 					return 1;
 				}
 				gen0->matrix[row-1] = calloc( col * sizeof(int), sizeof(int) );

@@ -51,28 +51,28 @@ png_bytep * row_pointers;
 int write_png_file(char* file_name) {
 	FILE *fp = fopen(file_name, "wb");
 	if (!fp){
-		printf("[write_png_file] File %s could not be opened for writing", file_name);
+		fprintf(stderr, "[write_png_file] File %s could not be opened for writing", file_name);
 		return 1;
 	}
 	png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 
 	if (!png_ptr){
-		printf("[write_png_file] png_create_write_struct failed");
+		fprintf(stderr, "[write_png_file] png_create_write_struct failed");
 		return 1;
 	}
 	info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr){
-		printf("[write_png_file] png_create_info_struct failed");
+		fprintf(stderr, "[write_png_file] png_create_info_struct failed");
 		return 1;
 	}
 	if (setjmp(png_jmpbuf(png_ptr))){
-		printf("[write_png_file] Error during init_io");
+		fprintf(stderr, "[write_png_file] Error during init_io");
 		return 1;
 	}
 	png_init_io(png_ptr, fp);
 
 	if (setjmp(png_jmpbuf(png_ptr))){
-		printf("[write_png_file] Error during writing header");
+		fprintf(stderr, "[write_png_file] Error during writing header");
 		return 1;
 	}
 	png_set_IHDR(png_ptr, info_ptr, width, height,
@@ -82,13 +82,13 @@ int write_png_file(char* file_name) {
 	png_write_info(png_ptr, info_ptr);
 
 	if (setjmp(png_jmpbuf(png_ptr))){
-		printf("[write_png_file] Error during writing bytes");
+		fprintf(stderr, "[write_png_file] Error during writing bytes");
 		return 1;
 	}
 	png_write_image(png_ptr, row_pointers);
 
 	if (setjmp(png_jmpbuf(png_ptr))){
-		printf("[write_png_file] Error during end of write");
+		fprintf(stderr, "[write_png_file] Error during end of write");
 		return 1;
 	}
 	png_write_end(png_ptr, NULL);

@@ -18,7 +18,7 @@ void help(){
 	printf("=========================================\n");
 }
 
-int getArguments(int argc, char** argv, gconfig_t* config){
+int readArguments(int argc, char** argv, gconfig_t* config){
 
 	for(int i = 1; i < argc; i++){
 		if( !strcmp(argv[i], "--input") && argc > i+1 ){
@@ -30,7 +30,7 @@ int getArguments(int argc, char** argv, gconfig_t* config){
 	}
 
 	if(config->filename == NULL){
-		printf("Brak pliku wejsciowego: brak argumentu\n");
+		fprintf(stderr, "Brak pliku wejsciowego: brak argumentu\n");
 		return -1;
 	}
 
@@ -87,7 +87,7 @@ int main(int argc, char** argv){
 		return EXIT_SUCCESS;
 	}
 
-	if( getArguments(argc, argv, config) != 0 ){
+	if( readArguments(argc, argv, config) != 0 ){
 		return EXIT_FAILURE;
 	}
 
