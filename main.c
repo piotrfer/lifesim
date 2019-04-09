@@ -98,7 +98,7 @@ int main(int argc, char** argv){
 	if( a != 0 )
 		return EXIT_FAILURE;
 
-	if( simulate( gen0, config, writeTxt, writePng ) != 0 )
+	if( simulate( gen0, config, writeTxt, writePng, NULL ) != 0 )
 		return EXIT_FAILURE;      
 
 	printf("Zadanie wykonano pomyslnie!\n");
