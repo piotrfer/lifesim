@@ -6,7 +6,7 @@
 #define COLUMN 1
 #define MESH 2
 
-int readFile(char* filename, gen_t* gen0){
+int readFile( gen_t* gen0, char* filename){
 	FILE *in = fopen(filename, "r");
 	if( in == NULL ){
 		printf("Brak pliku wejsciowego: plik %s nie istnieje\n", filename);	

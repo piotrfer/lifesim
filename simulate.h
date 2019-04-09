@@ -1,1 +1,1 @@
-int simulate( gen_t*, int, char*, int* );
+int simulate( gen_t*, gconfig_t*);

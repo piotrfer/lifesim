@@ -4,3 +4,5 @@ typedef struct{
 	int row;
 	int** matrix;
 } gen_t;
+
+gen_t* setGen();
