@@ -1,0 +1,3 @@
+lifesim: main.c reader.c simulate.c generation.c gconfig.c png_writer.c txt_writer.c
+	gcc -o lifesim main.c reader.c simulate.c next_gen.c generation.c gconfig.c -lpng png_writer.c txt_writer.c
+

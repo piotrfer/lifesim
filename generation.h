@@ -1,3 +1,6 @@
+#ifndef _generation_h
+#define _generation_h
+
 typedef struct{
 	int num;
 	int col;
@@ -6,3 +9,5 @@ typedef struct{
 } gen_t;
 
 gen_t* setGen();
+
+#endif

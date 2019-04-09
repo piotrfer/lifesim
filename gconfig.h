@@ -1,3 +1,6 @@
+#ifndef _gconfig_h
+#define _gconfig_h
+
 typedef struct{
     char* pngoutput;
     int border;
@@ -16,3 +19,5 @@ typedef struct{
 } gconfig_t;
 
 gconfig_t* setConfig();
+
+#endif
