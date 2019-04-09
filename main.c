@@ -77,8 +77,10 @@ int getArguments(int argc, char** argv, gconfig_t* config){
 
 int main(int argc, char** argv){
 
-	gen_t* gen0 = malloc(sizeof( gen_t* ));//setGen(); 
-	gconfig_t* config = malloc(sizeof( gconfig_t*));//setConfig();
+	gen_t* gen0 = setGen(); 
+	gconfig_t* config = setConfig();
+ 
+	
 
 	if( argc == 1 ){
 		help();
@@ -97,7 +99,8 @@ int main(int argc, char** argv){
 		return EXIT_FAILURE;      
 
 	printf("Zadanie wykonano pomyslnie!\n");
-
+	free(config->pngconfig);
+	free(config->gen_to_save);
 	free(config);
 	free(gen0);
 
