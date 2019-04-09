@@ -7,28 +7,25 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "generation.h"
+#include "gconfig.h"
 
 #define DEAD 0
 #define ALIVE 1
-#define BORDER 50
-#define FIELD 100
-#define MARK_DEAD 255
-#define MARK_ALIVE 0
-#define MARK_DEFAULT 255
+#define BUFSIZE 32
 
 int process_file();
 int write_png_file( char * );
 
-int writePng( gen_t* thisGen, char* output ){
+int writePng( gen_t* thisGen, pngconfig_t* pngconfig){
 
 	int errcnt = 0;
-	char* file = malloc( 32 * sizeof(char) );
+	char* file = malloc( BUFSIZE * sizeof(char) );
 	sprintf(file, "save/gen%d.png", thisGen->num);
 	struct stat st = {0};
 	if( stat("save", &st) == -1 )
 		mkdir("save", 0700);
 
-	if( process_file(thisGen) != 0 )
+	if( process_file(thisGen, pngconfig) != 0 )
 		errcnt++;
 	if( write_png_file(file) != 0 )
 		errcnt++;	
@@ -105,9 +102,9 @@ int write_png_file(char* file_name) {
 	return 0;
 }
 
-int process_file(gen_t* thisGen) {
-	width = thisGen->col * FIELD + 2*BORDER;
-	height = thisGen->row * FIELD + 2*BORDER;
+int process_file(gen_t* thisGen, pngconfig_t* pngconfig) {
+	width = thisGen->col * pngconfig->field + 2*pngconfig->border;
+	height = thisGen->row * pngconfig->field + 2*pngconfig->border;
 	bit_depth = 8;
 	color_type = PNG_COLOR_TYPE_GRAY;
 
@@ -124,15 +121,15 @@ int process_file(gen_t* thisGen) {
 	for (y=0; y<height; y++) {
 		png_byte* row = row_pointers[y];
 		for (x=0; x<width; x++) {
-			if( x > BORDER && x < width-BORDER && y > BORDER && y < height-BORDER){
+			if( x > pngconfig->border && x < width-pngconfig->border && y > pngconfig->border && y < height-pngconfig->border){
 
-				int mrow = (y - BORDER) / (FIELD+1);
-				int mcol = (x - BORDER) / (FIELD+1);
+				int mrow = (y - pngconfig->border) / (pngconfig->field+1);
+				int mcol = (x - pngconfig->border) / (pngconfig->field+1);
 
-				row[x] = thisGen->matrix[mrow][mcol] == ALIVE ? MARK_ALIVE: MARK_DEAD;
+				row[x] = thisGen->matrix[mrow][mcol] == ALIVE ? pngconfig->mark_alive: pngconfig->mark_dead;
 			}
 			else{
-				row[x] = MARK_DEFAULT;
+				row[x] = pngconfig->mark_default;
 			}
 		}
 	}

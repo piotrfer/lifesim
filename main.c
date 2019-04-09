@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include "generation.h"
 #include "reader.h"
+#include "gconfig.h"
 #include "simulate.h"
 
 void help(){
@@ -17,18 +18,18 @@ void help(){
 	printf("=========================================\n");
 }
 
-int arguments(int argc, char** argv, int* n, char** filename, char** output, int** save){
+int getArguments(int argc, char** argv, gconfig_t* config){
 
 	for(int i = 1; i < argc; i++){
 		if( !strcmp(argv[i], "--input") && argc > i+1 ){
 			if( argv[i+1][0] != '-'){ 
-				*filename = malloc( sizeof(argv[i+1]));
-				strcpy(*filename, argv[i+1]);
+				config->filename = malloc( sizeof(argv[i+1]));
+				strcpy(config->filename, argv[i+1]);
 			}
 		}
 	}
 
-	if(filename == NULL){
+	if(config->filename == NULL){
 		printf("Brak pliku wejsciowego: brak argumentu\n");
 		return -1;
 	}
@@ -36,33 +37,33 @@ int arguments(int argc, char** argv, int* n, char** filename, char** output, int
 	for(int i = 1; i < argc; i++)
 	{
 		if( !strcmp(argv[i],"--gen") && argc >= i ){
-			*n = atoi(argv[i+1]) + 1;
-			if( n < 0 ){
-				fprintf(stderr, "Argument: --gen %d: nieprawidlowa ilosc generacji \n", *n);
+			config->n = atoi(argv[i+1]) + 1;
+			if( config->n < 0 ){
+				fprintf(stderr, "Argument: --gen %d: nieprawidlowa ilosc generacji \n", config->n);
 				return -1;
 			}
 		}
 	}
 
-	*save = calloc( (*n+1)*sizeof(int), sizeof(int) ); 	
+	config->gen_to_save = calloc( (config->n + 1)*sizeof(int), sizeof(int) ); 	
 
 	for(int i = 0; i < argc; i++){
 
 		if( !strcmp(argv[i],"--output") && argc > i+1 ){
 			if(argv[i+1][0] != '-'){
-				*output = malloc( sizeof(argv[i+1]) );
-				strcpy(*output, argv[i+1]);
+				config->pngconfig->pngoutput = malloc( sizeof(argv[i+1]) );
+				strcpy(config->pngconfig->pngoutput, argv[i+1]);
 			}
 		}
 
 		if( !strcmp(argv[i],"--save") && argc > i+1 ){
 			if( !strcmp(argv[i+1],"all") )
-				for(int j = 0; j < *n+1; j++)
-					save[0][j] = 1;
+				for(int j = 0; j < config->n + 1; j++)
+					config->gen_to_save[j] = 1;
 			else {	
 				while( argc > i + 1 && isdigit(argv[i+1][0]) != 0 ){
-					if(atoi(argv[i+1]) <= *n)
-						save[0][atoi(argv[i+1])] = 1;
+					if(atoi(argv[i+1]) <= config->n)
+						config->gen_to_save[atoi(argv[i+1])] = 1;
 					i++;		
 				}
 			}
@@ -76,32 +77,29 @@ int arguments(int argc, char** argv, int* n, char** filename, char** output, int
 
 int main(int argc, char** argv){
 
-	gen_t gen0; 
-	int n = 10;
-	char* filename = NULL;
-	char* output = NULL;
-	int* save = NULL;
+	gen_t* gen0 = malloc(sizeof( gen_t* ));//setGen(); 
+	gconfig_t* config = malloc(sizeof( gconfig_t*));//setConfig();
 
 	if( argc == 1 ){
 		help();
 		return EXIT_SUCCESS;
 	}
 
-	if( arguments(argc, argv, &n, &filename, &output, &save) != 0 ){
+	if( getArguments(argc, argv, config) != 0 ){
 		return EXIT_FAILURE;
 	}
 
-	int a = readFile( filename, &gen0 );
+	int a = readFile( gen0, config->filename );
 	if( a != 0 )
 		return EXIT_FAILURE;
 
-	if( simulate( &gen0, n, output, save) != 0 )
+	if( simulate( gen0, config ) != 0 )
 		return EXIT_FAILURE;      
 
 	printf("Zadanie wykonano pomyslnie!\n");
 
-	free(filename);
-	free(output);
-	free(save);
+	free(config);
+	free(gen0);
+
 	return EXIT_SUCCESS;
 }

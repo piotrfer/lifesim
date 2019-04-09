@@ -1,1 +1,1 @@
-int readFile(char*, gen_t* );
+int readFile( gen_t*, char* );
