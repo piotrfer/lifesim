@@ -6,6 +6,7 @@
 #include <png.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
 #include "generation.h"
 #include "gconfig.h"
 
@@ -16,7 +17,7 @@
 int process_file();
 int write_png_file( char * );
 
-int writePng( gen_t* thisGen, pngconfig_t* pngconfig){
+int writePng( gen_t* thisGen, pictureconfig_t* pictureconfig){
 
 	int errcnt = 0;
 	char* file = malloc( BUFSIZE * sizeof(char) );
@@ -25,7 +26,7 @@ int writePng( gen_t* thisGen, pngconfig_t* pngconfig){
 	if( stat("save", &st) == -1 )
 		mkdir("save", 0700);
 
-	if( process_file(thisGen, pngconfig) != 0 )
+	if( process_file(thisGen, pictureconfig) != 0 )
 		errcnt++;
 	if( write_png_file(file) != 0 )
 		errcnt++;	
@@ -102,9 +103,9 @@ int write_png_file(char* file_name) {
 	return 0;
 }
 
-int process_file(gen_t* thisGen, pngconfig_t* pngconfig) {
-	width = thisGen->col * pngconfig->field + 2*pngconfig->border;
-	height = thisGen->row * pngconfig->field + 2*pngconfig->border;
+int process_file(gen_t* thisGen, pictureconfig_t* pictureconfig) {
+	width = thisGen->col * pictureconfig->field + 2*pictureconfig->border;
+	height = thisGen->row * pictureconfig->field + 2*pictureconfig->border;
 	bit_depth = 8;
 	color_type = PNG_COLOR_TYPE_GRAY;
 
@@ -121,15 +122,15 @@ int process_file(gen_t* thisGen, pngconfig_t* pngconfig) {
 	for (y=0; y<height; y++) {
 		png_byte* row = row_pointers[y];
 		for (x=0; x<width; x++) {
-			if( x > pngconfig->border && x < width-pngconfig->border && y > pngconfig->border && y < height-pngconfig->border){
+			if( x > pictureconfig->border && x < width-pictureconfig->border && y > pictureconfig->border && y < height-pictureconfig->border){
 
-				int mrow = (y - pngconfig->border) / (pngconfig->field+1);
-				int mcol = (x - pngconfig->border) / (pngconfig->field+1);
+				int mrow = (y - pictureconfig->border) / (pictureconfig->field+1);
+				int mcol = (x - pictureconfig->border) / (pictureconfig->field+1);
 
-				row[x] = thisGen->matrix[mrow][mcol] == ALIVE ? pngconfig->mark_alive: pngconfig->mark_dead;
+				row[x] = thisGen->matrix[mrow][mcol] == ALIVE ? pictureconfig->mark_alive: pictureconfig->mark_dead;
 			}
 			else{
-				row[x] = pngconfig->mark_default;
+				row[x] = pictureconfig->mark_default;
 			}
 		}
 	}

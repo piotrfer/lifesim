@@ -2,10 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
 #include "generation.h"
 #include "reader.h"
 #include "gconfig.h"
 #include "simulate.h"
+#include "txt_writer.h"
+#include "png_writer.h"
 
 void help(){
 	printf("** lifesim **\n");
@@ -51,8 +54,8 @@ int readArguments(int argc, char** argv, gconfig_t* config){
 
 		if( !strcmp(argv[i],"--output") && argc > i+1 ){
 			if(argv[i+1][0] != '-'){
-				config->pngconfig->pngoutput = malloc( sizeof(argv[i+1]) );
-				strcpy(config->pngconfig->pngoutput, argv[i+1]);
+				config->pictureconfig->pngoutput = malloc( sizeof(argv[i+1]) );
+				strcpy(config->pictureconfig->pngoutput, argv[i+1]);
 			}
 		}
 
@@ -95,11 +98,11 @@ int main(int argc, char** argv){
 	if( a != 0 )
 		return EXIT_FAILURE;
 
-	if( simulate( gen0, config ) != 0 )
+	if( simulate( gen0, config, writeTxt, writePng ) != 0 )
 		return EXIT_FAILURE;      
 
 	printf("Zadanie wykonano pomyslnie!\n");
-	free(config->pngconfig);
+	free(config->pictureconfig);
 	free(config->gen_to_save);
 	free(config);
 	free(gen0);

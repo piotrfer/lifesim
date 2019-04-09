@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "stdarg.h": "c",
-        "png.h": "c"
+        "png.h": "c",
+        "stat.h": "c"
     }
 }

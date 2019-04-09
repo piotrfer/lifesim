@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+
 #include "generation.h"
+
 #define BUFSIZE 32
 #define COLUMN 1
 #define MESH 2
