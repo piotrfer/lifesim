@@ -94,8 +94,7 @@ int main(int argc, char** argv){
 		return EXIT_FAILURE;
 	}
 
-	int a = readFile( gen0, config->filename );
-	if( a != 0 )
+	if( readFile( gen0, config->filename ) != 0 )
 		return EXIT_FAILURE;
 
 	if( simulate( gen0, config, writeTxt, writePng, NULL ) != 0 )

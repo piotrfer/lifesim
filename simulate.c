@@ -19,11 +19,11 @@ int simulate(gen_t* gen0, gconfig_t* config, int saveFile (gen_t* thisGen, char*
 			if( writeOnScreen(thisGen) != 0)
 				errcnt++;
 
-		if(config->gen_to_save[thisGen->num] == 1){
+		if(config->gen_to_save[thisGen->num] == 1)
 			if( saveFile != NULL)
 				if( saveFile(thisGen, config->txtoutput) != 0 )
 					errcnt++;
-		}
+			
 		if( nextGen(thisGen) != 0 )
 			errcnt++;
 	}
