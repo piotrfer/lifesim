@@ -20,8 +20,15 @@ int write_png_file( char * );
 int writePng( gen_t* thisGen, pictureconfig_t* pictureconfig){
 
 	int errcnt = 0;
-	char* file = malloc( BUFSIZE * sizeof(char) );
-	sprintf(file, "save/gen%d.png", thisGen->num);
+	char* file;
+	if( pictureconfig->pngoutput != NULL ){
+		file = malloc(strlen(pictureconfig->pngoutput) * sizeof( char ));
+		sprintf(file, "save/%s%d.png", pictureconfig->pngoutput, thisGen->num);
+	}
+	else{
+		file = malloc( BUFSIZE * sizeof(char) ); 
+		sprintf(file, "save/gen%d.png", thisGen->num);
+	}
 	struct stat st = {0};
 	if( stat("save", &st) == -1 )
 		mkdir("save", 0700);

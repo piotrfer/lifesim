@@ -13,8 +13,16 @@
 
 int writeTxt( gen_t* thisGen, char* output){
 
-	char* file = malloc( BUFSIZE * sizeof(char) );	
-	sprintf(file, "save/gen%d.txt", thisGen->num);
+	char* file;
+
+	if( output != NULL ){
+		file = malloc( strlen( output ) * sizeof( char ) );
+		sprintf(file, "save/%s%d.txt", output, thisGen->num );	
+	}
+	else{
+		file = malloc( BUFSIZE * sizeof(char) );
+		sprintf(file, "save/gen%d.txt", thisGen->num);
+	}
 	struct stat st = {0};
 	if( stat("save", &st) == -1 )
 		mkdir("save", 0700);
@@ -33,7 +41,7 @@ int writeTxt( gen_t* thisGen, char* output){
 		}
 	}
 	fclose(out);
-	free( file);
+	free(file);
 
 	return 0;
 }
