@@ -3,5 +3,6 @@
         "stdarg.h": "c",
         "png.h": "c",
         "stat.h": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }

@@ -9,14 +9,16 @@
 #include "simulate.h"
 #include "txt_writer.h"
 #include "png_writer.h"
+#include "random.h"
 
 void help(){
 	printf("** lifesim **\n");
 	printf("program symulujacy gre w zycie Johna Conwaya\n");
 	printf("mozliwe argumenty wywolania:\n");
-	printf("--input [filename] -- nazwa pliku zawierajacego dane wejsciowe\n");
+	printf("--input [filename] -- nazwa pliku zawierajacego dane wejsciowe; \"random\" -- losowo generowana siatka\n");
 	printf("--gen [number] -- liczba generacji do zasymulowania\n");
-	printf("--output [filename] -- prefiks pliku .png stanowiacego plik wyjsciowy programu\n");
+	printf("--pngoutput [filename] -- prefiks pliku .png stanowiacego plik wyjsciowy programu\n");
+	printf("--txtoutput [filename] -- prefiks pliku .txt stanowiacego plik wyjsciowy programu\n");
 	printf("--save [number] -- numery generacji do zapisania w postaci pliku .txt; \"all\" -- wszystkie generacje\n");
 	printf("=========================================\n");
 }
@@ -52,10 +54,17 @@ int readArguments(int argc, char** argv, gconfig_t* config){
 
 	for(int i = 0; i < argc; i++){
 
-		if( !strcmp(argv[i],"--output") && argc > i+1 ){
+		if( !strcmp(argv[i],"--pngoutput") && argc > i+1 ){
 			if(argv[i+1][0] != '-'){
 				config->pictureconfig->pngoutput = malloc( sizeof(argv[i+1]) );
 				strcpy(config->pictureconfig->pngoutput, argv[i+1]);
+			}
+		}
+
+		if( !strcmp(argv[i],"--txtoutput") && argc > i+1 ){
+			if(argv[i+1][0] != '-'){
+				config->txtoutput = malloc( sizeof(argv[i+1]) );
+				strcpy(config->txtoutput, argv[i+1]);
 			}
 		}
 
@@ -94,16 +103,21 @@ int main(int argc, char** argv){
 		return EXIT_FAILURE;
 	}
 
-	if( readFile( gen0, config->filename ) != 0 )
+	if( !strcmp(config->filename, "random") ){
+		if( fillRandom( gen0, config->randomconfig) != 0 ){
+			return EXIT_FAILURE;
+		}
+	}
+	else if( readFile( gen0, config->filename ) != 0 ){
 		return EXIT_FAILURE;
+	}
+
 
 	if( simulate( gen0, config, writeTxt, writePng, NULL ) != 0 )
 		return EXIT_FAILURE;      
 
 	printf("Zadanie wykonano pomyslnie!\n");
-	free(config->pictureconfig);
-	free(config->gen_to_save);
-	free(config);
+	freeConfig( config );
 	free(gen0);
 
 	return EXIT_SUCCESS;

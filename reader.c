@@ -9,6 +9,7 @@
 #define MESH 2
 
 int readFile( gen_t* gen0, char* filename){
+	
 	FILE *in = fopen(filename, "r");
 	if( in == NULL ){
 		fprintf(stderr, "Brak pliku wejsciowego: plik %s nie istnieje\n", filename);	

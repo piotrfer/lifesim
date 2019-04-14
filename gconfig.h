@@ -2,6 +2,11 @@
 #define _gconfig_h
 
 typedef struct{
+    int row;
+    int col;
+} randomconfig_t;
+
+typedef struct{
     char* pngoutput;
     int border;
     int field;
@@ -16,8 +21,10 @@ typedef struct{
     char* txtoutput;
     int* gen_to_save;
     pictureconfig_t* pictureconfig;
+    randomconfig_t* randomconfig;
 } gconfig_t;
 
 gconfig_t* setConfig();
+void freeConfig( gconfig_t* );
 
 #endif

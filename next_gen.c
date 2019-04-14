@@ -42,6 +42,7 @@ int nextGen( gen_t* thisGen ){
 		for(int j = 0; j < origin->col; j++){
 			int* vector = vectorMaker(origin, i, j);
 			int alive_neighbours = aliveNeighboursCounter( vector, NBOUR);
+			free(vector);
 			if( origin->matrix[i][j] == DEAD && alive_neighbours == 3 )
 				thisGen->matrix[i][j] = ALIVE;
 			else if( origin->matrix[i][j] == ALIVE && alive_neighbours != 3 && alive_neighbours != 2 )
