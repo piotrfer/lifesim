@@ -118,7 +118,7 @@ int main(int argc, char** argv){
 
 	printf("Zadanie wykonano pomyslnie!\n");
 	freeConfig( config );
-	free(gen0);
+	freeGen( gen0 );
 
 	return EXIT_SUCCESS;
 }

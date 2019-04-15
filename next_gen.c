@@ -37,7 +37,6 @@ int* vectorMaker( gen_t* origin, int i, int j){
 int nextGen( gen_t* thisGen ){
 
 	gen_t* origin = setGen( thisGen );
-
 	for(int i = 0; i < origin-> row; i++){
 		for(int j = 0; j < origin->col; j++){
 			int* vector = vectorMaker(origin, i, j);
@@ -51,7 +50,7 @@ int nextGen( gen_t* thisGen ){
 	}
 
 	thisGen->num++;
-	free(origin);
+	freeGen( origin );
 
 	return 0;
 }

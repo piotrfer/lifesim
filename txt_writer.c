@@ -40,6 +40,7 @@ int writeTxt( gen_t* thisGen, char* output){
 			fprintf(out, "\n");
 		}
 	}
+	
 	fclose(out);
 	free(file);
 

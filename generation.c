@@ -3,7 +3,7 @@
 
 gen_t* setGen(gen_t* thisGen){
 
-    gen_t* origin = malloc( sizeof( gen_t* ));
+    gen_t* origin = malloc( sizeof( gen_t ));
     if( thisGen != NULL ){
         origin->num = thisGen->num;
         origin->col = thisGen->col;
@@ -18,5 +18,14 @@ gen_t* setGen(gen_t* thisGen){
             }
         }
     }
+
     return origin;
+}
+
+void freeGen(gen_t* gen){
+    for(int i =0; i < gen->row; i++)
+        free( gen->matrix[i]);
+    free( gen->matrix );
+
+    free(gen);
 }

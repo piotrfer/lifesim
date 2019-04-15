@@ -101,6 +101,9 @@ int write_png_file(char* file_name) {
 	}
 	png_write_end(png_ptr, NULL);
 
+	png_destroy_write_struct(&png_ptr, &info_ptr);
+    png_free_data(png_ptr, info_ptr, PNG_FREE_ALL, -1);
+
 	for (y=0; y<height; y++)
 		free(row_pointers[y]);
 	free(row_pointers);

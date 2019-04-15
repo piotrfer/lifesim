@@ -23,7 +23,9 @@ gconfig_t* setConfig(){
 void freeConfig( gconfig_t* config )
 {
     free( config->pictureconfig->pngoutput);
+    free( config->pictureconfig );
     free( config->txtoutput);
+    free( config->filename );
     free( config->randomconfig );
     free( config->pictureconfig );
     free( config->gen_to_save );

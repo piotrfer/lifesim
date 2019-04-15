@@ -10,4 +10,6 @@ typedef struct{
 
 gen_t* setGen();
 
+void freeGen(gen_t*);
+
 #endif

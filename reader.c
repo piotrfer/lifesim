@@ -33,6 +33,7 @@ int readFile( gen_t* gen0, char* filename){
 				type = COLUMN;
 		}
 	}
+	free(line);
 	rewind(in);
 
 	if(type == COLUMN){
@@ -71,7 +72,7 @@ int readFile( gen_t* gen0, char* filename){
 		rewind(in);
 
 		gen0->matrix = malloc( sizeof(int *) );
-		gen0->matrix[0] = calloc( col * sizeof(int), sizeof(int) );
+		gen0->matrix[0] = malloc( col * sizeof(int) );
 
 		int i = 0;
 		while( (c = getc(in) ) != EOF ){
@@ -82,7 +83,7 @@ int readFile( gen_t* gen0, char* filename){
 					fprintf(stderr, "Blad realokowania pamieci\n");
 					return 1;
 				}
-				gen0->matrix[row-1] = calloc( col * sizeof(int), sizeof(int) );
+				gen0->matrix[row-1] = malloc( col * sizeof(int) );
 				i = 0;
 			}
 			else if( (c == '0' || c == '1') && i < col ){
@@ -98,6 +99,7 @@ int readFile( gen_t* gen0, char* filename){
 			}
 		}
 
+		free(gen0->matrix[row-1]);
 		gen0->matrix = realloc( gen0->matrix, (--row) * sizeof( int *) );
 		gen0->col = col;
 		gen0->row = row;
