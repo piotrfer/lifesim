@@ -107,25 +107,26 @@ int compareMatrix( gen_t test, gen_t odczyt){
 
 int main(){
 
-    gen_t test, odczyt[2];
+    gen_t* test = setGen(NULL);
+    gen_t* odczyt[2];
 
-    fillTest( &test );
-    fillOdczyt1( &odczyt[0] );
-    fillOdczyt2( &odczyt[1] );
+    fillTest( test );
+    fillOdczyt1( odczyt[0] = setGen(NULL) );
+    fillOdczyt2( odczyt[1] = setGen(NULL) );
     
     for(int i = 0; i < 10 + 1; i++){
-        if( nextGen( &test ) != 0 ){
+        if( nextGen( test ) != 0 ){
             printf("Test1: fail\n");
             return 1;
         }
-        if( test.num == 4 ){
-            if( compareMatrix( test, odczyt[0]) != 0){
+        if( test->num == 4 ){
+            if( compareMatrix( *test, *odczyt[0]) != 0){
                 printf("Test1: fail\n");
                 return 1;
             }
         }
-        if( test.num == 9 ){
-           if( compareMatrix( test, odczyt[1]) != 0){
+        if( test->num == 9 ){
+           if( compareMatrix( *test, *odczyt[1]) != 0){
                 printf("Test1: fail\n");
                 return 1;
             }
@@ -133,6 +134,8 @@ int main(){
     }
 
     printf("Test1: success\n");
-
+    freeGen(test);
+    freeGen(odczyt[0]);
+    freeGen(odczyt[1]);
     return 0;
 }

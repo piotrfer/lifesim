@@ -56,21 +56,21 @@ int compareMatrix( gen_t test, gen_t odczyt){
 
 int main(int argc, char** argv){
 
-	gen_t test[2];
-	gen_t odczyt_siatki[5];
+	gen_t* test[2];
+	gen_t* odczyt_siatki[5];
 	int errcnt = 0;
 
-	fillTest1( &test[0] );
-	fillTest2( &test[1] );
+	fillTest1( test[0] = setGen(NULL) );
+	fillTest2( test[1] = setGen(NULL) );
 
 	freopen("/dev/null", "w", stderr);
 
 	printf("Test1: ");
-	if( readFile( &(odczyt_siatki[0]), "t1.txt" ) != 0 ){
+	if( readFile( (odczyt_siatki[0]) = setGen(NULL), "t1.txt" ) != 0 ){
 		printf("\nBledna obsluga bledow");
 		errcnt++;
 	}
-	if( compareMatrix( test[0], odczyt_siatki[0]) != 0 ){
+	if( compareMatrix( *test[0], *odczyt_siatki[0]) != 0 ){
 		printf("\nBledne wczytanie wartosci");
 	}
 	if( errcnt == 0 ){
@@ -82,11 +82,11 @@ int main(int argc, char** argv){
 	errcnt = 0;
 
 	printf("Test2: ");
-	if( readFile( &(odczyt_siatki[1]), "t2.txt" ) != 0 ){
+	if( readFile( (odczyt_siatki[1] = setGen(NULL)), "t2.txt" ) != 0 ){
 		printf("\nBledna obsluga bledow");
 		errcnt++;
 	}
-	if( compareMatrix( test[1], odczyt_siatki[1]) != 0 ){
+	if( compareMatrix( *test[1], *odczyt_siatki[1]) != 0 ){
 		printf("\nBledne wczytanie wartosci");
 	}
 	if( errcnt == 0 ){
@@ -98,14 +98,14 @@ int main(int argc, char** argv){
 	errcnt = 0;
 
 
-	if( readFile( &(odczyt_siatki[2]), "t3.txt" ) != 0 ){
+	if( readFile( (odczyt_siatki[2] = setGen(NULL)), "t3.txt" ) != 0 ){
 		printf("Test3: success\n");
 	}
 	else{
 		printf("Test3: fail\n");
 	}
 	
-	if( readFile( &odczyt_siatki[3], "t4.txt" ) != 0 ){
+	if( readFile( odczyt_siatki[3] = setGen(NULL), "t4.txt" ) != 0 ){
 		printf("Test4: success\n");
 	}
 	else{
@@ -113,11 +113,18 @@ int main(int argc, char** argv){
 	}
 	
 	
-	if( readFile( &odczyt_siatki[4], "t5.txt" ) != 0 ){
+	if( readFile( odczyt_siatki[4] = setGen(NULL), "t5.txt" ) != 0 ){
 		printf("Test5: success\n");
 	}
 	else{
 		printf("\rTest5: fail\n");
 	}
 
+	freeGen( odczyt_siatki[0] );
+	freeGen( odczyt_siatki[1] );
+	freeGen( odczyt_siatki[2] );
+	freeGen( odczyt_siatki[3] );
+	freeGen( odczyt_siatki[4] );
+	freeGen( test[0] );
+	freeGen( test[1] );
 }
