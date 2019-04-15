@@ -56,7 +56,7 @@ void fillGen3( gen_t* test ){
 
 int main(){
     gen_t* test[3];
-    pictureconfig_t* config = malloc( sizeof( pictureconfig_t*) );
+    pictureconfig_t* config = malloc( sizeof( pictureconfig_t) );
 
     config->border = 50;
     config->field = 100;
@@ -95,7 +95,6 @@ int main(){
             printf("Test3: success\n");
     }
     
-    free(config->pngoutput);
     freeGen(test[0]);
     freeGen(test[1]);
     freeGen(test[2]);
