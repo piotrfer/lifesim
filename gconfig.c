@@ -14,8 +14,8 @@ gconfig_t* setConfig(){
     config->pictureconfig->mark_default = 255;
 
     config->randomconfig = malloc( sizeof (randomconfig_t) );
-    config->randomconfig->col = 100;
-    config->randomconfig->row = 100;
+    config->randomconfig->col = 40;
+    config->randomconfig->row = 40;
 
     return config;
 }

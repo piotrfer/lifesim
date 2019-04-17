@@ -10,6 +10,7 @@
 #include "txt_writer.h"
 #include "png_writer.h"
 #include "random.h"
+#include "screen_writer.h"
 
 void help(){
 	printf("** lifesim **\n");
@@ -112,7 +113,7 @@ int main(int argc, char** argv){
 	}
 
 
-	if( simulate( gen0, config, writeTxt, writePng, NULL ) != 0 )
+	if( simulate( gen0, config, writeTxt, writePng, writeOnScreen ) != 0 )
 		return EXIT_FAILURE;      
 
 	printf("Zadanie wykonano pomyslnie!\n");
